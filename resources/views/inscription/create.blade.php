@@ -6,6 +6,8 @@
 
  <!-- Inclure la Hero Section -->
  @include('partials.hero')
+ <!-- Inclure le Call to Action -->
+ @include('partials.call-to-action')
  
 <main class="flex-grow container mx-auto max-w-4xl px-4 py-10 mt-12">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -14,7 +16,9 @@
             <div class="text-center mb-6">
                 <img src="{{ asset('images/logo.png') }}" alt="Logo de l'événement" class="mx-auto w-20 h-20">
                 <h2 class="text-2xl font-bold text-primary">Formulaire d'inscription</h2>
+                
             </div>
+            
             <form id="form-inscription" method="POST" action="{{ route('match-inscription.store') }}">
                 @csrf
                 <div class="mb-4">
@@ -54,6 +58,11 @@
                     @error('dossard')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
+                        <!-- Dossards déjà pris -->
+                    <p class="mt-2 text-sm text-gray-600">
+                        <span class="font-semibold">Dossards déjà pris :</span> 
+                        <span id="dossards-pris" class="text-red-500">{{ implode(', ', $dossardsPris) }}</span>
+                    </p>
                 </div>
                 <div class="mb-4">
                     <label for="taille_maillot" class="block text-gray-700 font-medium">Taille du maillot <span class="text-red-500">*</span></label>

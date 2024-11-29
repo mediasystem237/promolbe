@@ -13,8 +13,14 @@ class InscriptionController extends Controller
      */
     public function create()
     {
-        return view('inscription.create');
+        // Récupérer les dossards déjà pris
+        $dossardsPris = Inscription::pluck('dossard')->toArray();
+        
+
+        // Passer les données à la vue
+        return view('inscription.create', compact('dossardsPris'));
     }
+
 
     /**
      * Traite les données soumises et enregistre l'inscription.
@@ -43,6 +49,11 @@ class InscriptionController extends Controller
             $adminPhone = '681350008';  // Le numéro de téléphone de l'administrateur
             $smsController->sendSmsToAdmin($adminPhone, $inscription);  // Envoyer un SMS à l'administrateur
 
+            // Mettre à jour le champ message_sent
+             $inscription->update(['message_sent' => true]);
+
+
+
             // Retourner les données sous forme de JSON
             return response()->json([
                 'success' => true,
@@ -56,4 +67,48 @@ class InscriptionController extends Controller
             ], 500);
         }
     }
+
+    public function find()
+    {
+        return view('inscription.find');
+    }
+
+
+    public function edit(Request $request)
+    {
+        $request->validate([
+            'telephone' => 'required|digits:9', // Exemple : numéro à 9 chiffres
+        ]);
+
+        $inscription = Inscription::where('telephone', $request->telephone)->first();
+
+        if (!$inscription) {
+            return redirect()->route('inscription.find')->with('error', 'Aucune inscription trouvée pour ce numéro.');
+        }
+
+        return view('inscription.edit', compact('inscription'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $inscription = Inscription::findOrFail($id);
+
+        $request->validate([
+            'nom_maillot' => 'required|string|max:255',
+            'dossard' => 'required|integer|unique:inscriptions,dossard,' . $id,
+            'taille_maillot' => 'required|string',
+            // Ajoutez d'autres règles si nécessaire
+        ]);
+
+        $inscription->update($request->only('nom_maillot', 'dossard', 'taille_maillot'));
+
+        // Retourner les données mises à jour en JSON
+    return response()->json([
+        'success' => true,
+        'message' => 'Vos informations ont été mises à jour avec succès.',
+        'data' => $inscription
+    ]);
+
+    }
+
 }

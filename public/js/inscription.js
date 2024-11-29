@@ -29,6 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(updateCountdown, 1000);
     updateCountdown(); // Initialisation immédiate
 
+
+    
+
   // Écouter la soumission du formulaire d'inscription
 /*document.getElementById('form-inscription').addEventListener('submit', function (event) {
     event.preventDefault();  // Empêcher la soumission par défaut

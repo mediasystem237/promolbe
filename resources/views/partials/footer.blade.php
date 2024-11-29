@@ -54,13 +54,13 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
-                        contact@lyceeemana.cm
+                        contact@promolbe.com
                     </p>
                     <p class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h3m-3-8a5 5 0 01-5 5v0a5 5 0 01-5-5v-2a5 5 0 015-5v0a5 5 0 015 5v2z" />
                         </svg>
-                        +237 6xx xxx xxx
+                        +237 655 818 416
                     </p>
                 </div>
             </div>
