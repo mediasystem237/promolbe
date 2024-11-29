@@ -4,6 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\DashboardController;
+use App\Exports\InscriptionsExport;
+use Maatwebsite\Excel\Facades\Excel;
+
+Route::get('/dashboard/export', function () {
+    return Excel::download(new InscriptionsExport, 'inscriptions.xlsx');
+})->name('dashboard.export');
 
 Route::get('/', function () {
     return view('welcome');
