@@ -43,6 +43,13 @@ class DashboardController extends Controller
     // Créer la requête de base
     $query = Inscription::query();
 
+    // Trier les inscriptions en fonction des paramètres GET (tri)
+    if ($request->has('sort_by') && $request->has('direction')) {
+        $sortBy = $request->get('sort_by');
+        $direction = $request->get('direction');
+        $query->orderBy($sortBy, $direction);
+    }
+
     // Recherche
     if ($request->has('search')) {
         $search = $request->get('search');
