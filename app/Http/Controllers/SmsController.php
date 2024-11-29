@@ -28,7 +28,7 @@ class SmsController extends Controller
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
-            ])->post('http://smsvas.com/bulk/public/index.php/api/v1/sendsms', $data);
+            ])->post('https://smsvas.com/bulk/public/index.php/api/v1/sendsms', $data);
 
             if (!$response->successful()) {
                 throw new \Exception('Erreur lors de l\'envoi du message à l\'utilisateur.');
@@ -61,7 +61,7 @@ class SmsController extends Controller
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
-            ])->post('http://smsvas.com/bulk/public/index.php/api/v1/sendsms', $data);
+            ])->post('https://smsvas.com/bulk/public/index.php/api/v1/sendsms', $data);
 
             if (!$response->successful()) {
                 throw new \Exception('Erreur lors de l\'envoi du message à l\'administrateur.');
