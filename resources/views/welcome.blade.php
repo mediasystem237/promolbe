@@ -68,7 +68,7 @@
                         <p class="text-gray-600 mb-6">
                             Rejoignez notre groupe WhatsApp et restez connecté !
                         </p>
-                        <a href="#" class="inline-block bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition group-hover:scale-105 transform">
+                        <a href="https://chat.whatsapp.com/Bmpw1hJJomKAD13XW51Uup" class="inline-block bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition group-hover:scale-105 transform">
                             Rejoindre le Groupe
                         </a>
                     </div>
