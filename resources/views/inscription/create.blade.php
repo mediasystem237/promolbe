@@ -59,10 +59,20 @@
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                         <!-- Dossards déjà pris -->
-                    <p class="mt-2 text-sm text-gray-600">
-                        <span class="font-semibold">Dossards déjà pris :</span> 
-                        <span id="dossards-pris" class="text-red-500">{{ implode(', ', $dossardsPris) }}</span>
-                    </p>
+                        <div class="mt-4">
+                            <p class="text-sm text-gray-700 mb-2">
+                                <span class="font-semibold">Dossards déjà pris :</span>
+                            </p>
+                            <div id="dossards-pris" class="flex flex-wrap gap-2">
+                                @forelse($dossardsPris as $dossard)
+                                    <span class="inline-block bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium">
+                                        {{ $dossard }}
+                                    </span>
+                                @empty
+                                    <span class="text-gray-500 text-sm">Aucun dossard n'a été pris</span>
+                                @endforelse
+                            </div>
+                        </div>
                 </div>
                 <div class="mb-4">
                     <label for="taille_maillot" class="block text-gray-700 font-medium">Taille du maillot <span class="text-red-500">*</span></label>
@@ -116,6 +126,23 @@
 
  <!-- Inclusion de la partial pour la modale -->
  @include('partials.modal')
+ <script>
+    // Optional: JavaScript to highlight dossards dynamically
+    document.addEventListener('DOMContentLoaded', () => {
+        const dossardsPris = document.getElementById('dossards-pris');
+        const dossards = dossardsPris.querySelectorAll('span');
+        
+        dossards.forEach(dossard => {
+            dossard.addEventListener('mouseover', () => {
+                dossard.classList.add('scale-105', 'shadow-md');
+            });
+            
+            dossard.addEventListener('mouseout', () => {
+                dossard.classList.remove('scale-105', 'shadow-md');
+            });
+        });
+    });
+</script>
 
     <script src="{{ asset('js/inscription.js') }}"></script>
 
