@@ -47,7 +47,7 @@ class SmsController extends Controller
         $message .= "Poste : {$inscription->poste}\n";
         $message .= "Dossard : {$inscription->dossard}\n";
         $message .= "Taille du maillot : {$inscription->taille_maillot}\n";
-        $message .= "Téléphone : {$inscription->telephone}";
+        $message .= "Tél : {$inscription->telephone}";
 
         $data = [
             'user' => env('NEXAH_USER'),
