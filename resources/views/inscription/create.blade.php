@@ -110,27 +110,77 @@
         </section>
 
         <!-- Informations -->
-        <section class="bg-white rounded-lg shadow-lg p-8 flex flex-col justify-between">
-            <div class="text-center">
-                <h3 class="text-xl font-bold text-primary mb-2">Compte à rebours</h3>
-                <p id="match-date" class="text-gray-700 mb-4">21 Décembre 2024</p>
-                <div id="countdown" class="text-2xl font-bold text-primary">
-                    <span id="days">0</span> jours, 
-                    <span id="hours">0</span> heures, 
-                    <span id="minutes">0</span> minutes, 
-                    <span id="seconds">0</span> secondes
+        <div class="bg-white rounded-2xl shadow-2xl p-6 max-w-md mx-auto transition-all duration-300 hover:shadow-xl">
+            <div class="grid grid-cols-1 gap-6">
+                {{-- Countdown Section --}}
+                <div class="text-center">
+                    <div class="flex items-center justify-center mb-4">
+                        <i class="fas fa-clock mr-2 text-blue-600"></i>
+                        <h3 class="text-xl font-bold text-gray-800">Compte à rebours</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4 flex items-center justify-center">
+                        <i class="fas fa-calendar mr-2 text-blue-500"></i>
+                        21 Décembre 2024
+                    </p>
+                    
+                    <div id="countdown" class="grid grid-cols-4 gap-2">
+                        @foreach(['days' => 'Jours', 'hours' => 'Heures', 'minutes' => 'Minutes', 'seconds' => 'Secondes'] as $unit => $label)
+                            <div class="bg-blue-50 p-3 rounded-lg shadow-inner">
+                                <div id="{{ $unit }}" class="text-2xl font-bold text-blue-600">0</div>
+                                <div class="text-xs text-gray-500 uppercase">{{ $label }}</div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Jersey Preview Section --}}
+                <div class="text-center">
+                    <div class="flex items-center justify-center mb-4">
+                        <i class="fas fa-tshirt mr-2 text-blue-600"></i>
+                        <h3 class="text-xl font-bold text-gray-800">Aperçu du maillot</h3>
+                    </div>
+                    <div class="relative group">
+                        <img 
+                            src="{{ asset('images/jersey.jpg') }}" 
+                            alt="Mockup du maillot" 
+                            class="rounded-lg shadow-lg mx-auto transition-transform duration-300 group-hover:scale-105"
+                        >
+                        <div class="absolute inset-0 bg-blue-500 opacity-0 group-hover:opacity-20 rounded-lg transition-opacity duration-300"></div>
+                    </div>
                 </div>
             </div>
-            <div class="text-center mt-8">
-                <h3 class="text-xl font-bold text-primary mb-4">Aperçu du maillot</h3>
-                <img src="{{ asset('images/jersey.jpg') }}" alt="Mockup du maillot" class="rounded-lg shadow-md">
-            </div>
-        </section>
+        </div>
     </div>
 </main>
 
  <!-- Inclusion de la partial pour la modale -->
  @include('partials.modal')
+
+ @push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function updateCountdown() {
+        const targetDate = new Date('2024-12-21T00:00:00');
+        const now = new Date();
+        const difference = targetDate.getTime() - now.getTime();
+
+        const units = {
+            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+            minutes: Math.floor((difference / (1000 * 60)) % 60),
+            seconds: Math.floor((difference / 1000) % 60)
+        };
+
+        Object.entries(units).forEach(([unit, value]) => {
+            document.getElementById(unit).textContent = value;
+        });
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+});
+</script>
+@endpush
  <script>
     // Optional: JavaScript to highlight dossards dynamically
     document.addEventListener('DOMContentLoaded', () => {
