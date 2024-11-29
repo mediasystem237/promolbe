@@ -55,9 +55,14 @@
                     <label for="dossard" class="block text-gray-700 font-medium">Dossard <span class="text-red-500">*</span></label>
                     <input type="number" id="dossard" name="dossard" placeholder="Numéro de dossard" value="{{ old('dossard') }}" required
                         class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary">
-                    @error('dossard')
-                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                    @enderror
+
+                   <!-- Zone de retour pour la vérification en temps réel -->
+                    <div id="dossard-feedback" class="mt-2 text-sm"></div>
+                        @if($errors->has('dossard'))
+                            <div class="text-red-500 text-sm mt-2">
+                                {{ $errors->first('dossard') }}
+                            </div>
+                        @endif
                         <!-- Dossards déjà pris -->
                         <div class="mt-4">
                             <p class="text-sm text-gray-700 mb-2">
@@ -143,6 +148,42 @@
         });
     });
 </script>
+
+<!-- Ajoutez ce code dans la section <script> ou un fichier JS séparé -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dossardInput = document.getElementById('dossard');
+        const dossardFeedback = document.getElementById('dossard-feedback'); // Zone de retour pour l'utilisateur
+
+        // Vérification en temps réel
+        dossardInput.addEventListener('input', function () {
+            const dossard = dossardInput.value;
+
+            // Vérification si le dossard est valide (ne doit pas être vide)
+            if (dossard.length >= 1) {
+                // Envoi de la requête Ajax
+                fetch(`/verifier-dossard/${dossard}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Affichage d'un message en fonction du résultat
+                        if (data.exists) {
+                            dossardFeedback.textContent = "Ce dossard est déjà pris.";
+                            dossardFeedback.classList.add("text-red-500");
+                            dossardFeedback.classList.remove("text-green-500");
+                        } else {
+                            dossardFeedback.textContent = "Ce dossard est disponible.";
+                            dossardFeedback.classList.add("text-green-500");
+                            dossardFeedback.classList.remove("text-red-500");
+                        }
+                    });
+            } else {
+                // Si le champ est vide, on n'affiche rien
+                dossardFeedback.textContent = '';
+            }
+        });
+    });
+</script>
+
 
     <script src="{{ asset('js/inscription.js') }}"></script>
 

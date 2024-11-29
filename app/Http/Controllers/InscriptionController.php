@@ -123,4 +123,15 @@ class InscriptionController extends Controller
 
     }
 
+    public function verifierDossard($dossard)
+    {
+        $dossardExist = Inscription::where('dossard', $dossard)->exists();
+
+        // Retourner une réponse JSON avec un indicateur si le dossard existe
+        return response()->json([
+            'exists' => $dossardExist
+        ]);
+    }
+
+
 }

@@ -26,6 +26,7 @@ Route::post('/inscription/edit', [InscriptionController::class, 'edit'])->name('
 Route::put('/inscription/{id}', [InscriptionController::class, 'update'])->name('inscription.update');
 
 Route::delete('/inscriptions/{inscription}', [InscriptionController::class, 'destroy'])->name('inscription.destroy');
+Route::get('/verifier-dossard/{dossard}', [InscriptionController::class, 'verifierDossard'])->name('verifier.dossard');
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
