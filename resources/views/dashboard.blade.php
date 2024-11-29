@@ -23,6 +23,11 @@
                 <h3 class="text-gray-500 text-sm">Défenseurs</h3>
                 <p class="text-2xl font-bold">{{ $inscriptions->where('poste', 'Défenseur')->count() }}</p>
             </div>
+            <!-- Carte statistique 3 -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-gray-500 text-sm">Milieux</h3>
+                <p class="text-2xl font-bold">{{ $inscriptions->where('poste', 'Milieu')->count() }}</p>
+            </div>
             <!-- Carte statistique 4 -->
             <div class="bg-white rounded-lg shadow p-6">
                 <h3 class="text-gray-500 text-sm">Attaquants</h3>
