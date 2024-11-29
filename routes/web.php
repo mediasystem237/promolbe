@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\SmsController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,6 +18,13 @@ Route::post('/inscription', [InscriptionController::class, 'store'])->name('matc
 Route::get('/inscription/edit', [InscriptionController::class, 'find'])->name('inscription.find');
 Route::post('/inscription/edit', [InscriptionController::class, 'edit'])->name('inscription.edit');
 Route::put('/inscription/{id}', [InscriptionController::class, 'update'])->name('inscription.update');
+
+Route::delete('/inscriptions/{inscription}', [InscriptionController::class, 'destroy'])->name('inscription.destroy');
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard/access', [DashboardController::class, 'showAccessForm'])->name('dashboard.access');
+Route::post('/dashboard/access', [DashboardController::class, 'checkAccessCode'])->name('dashboard.access.post');
 
 
 

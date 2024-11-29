@@ -68,6 +68,18 @@ class InscriptionController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        // Trouver l'inscription par ID
+        $inscription = Inscription::findOrFail($id);
+
+        // Supprimer l'inscription
+        $inscription->delete();
+
+        // Rediriger avec un message de succès
+        return redirect()->route('inscriptions.index')->with('success', 'Inscription supprimée avec succès.');
+    }
+
     public function find()
     {
         return view('inscription.find');
