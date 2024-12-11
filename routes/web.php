@@ -29,6 +29,7 @@ Route::delete('/inscriptions/{inscription}', [InscriptionController::class, 'des
 Route::get('/verifier-dossard/{dossard}', [InscriptionController::class, 'verifierDossard'])->name('verifier.dossard');
 
 
+Route::patch('/dashboard/update-payment/{id}', [DashboardController::class, 'updatePayment'])->name('dashboard.update_payment');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard/access', [DashboardController::class, 'showAccessForm'])->name('dashboard.access');
 Route::post('/dashboard/access', [DashboardController::class, 'checkAccessCode'])->name('dashboard.access.post');

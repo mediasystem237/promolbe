@@ -10,12 +10,14 @@ class Inscription extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nom',
-        'nom_maillot',
-        'poste',
-        'dossard',
-        'taille_maillot',
+        'dossard', 
+        'nom', 
+        'nom_maillot', 
+        'poste', 
+        'taille_maillot', 
         'telephone',
+        'paiement_maillot' // Nouveau champ
     ];
+    
     
 }

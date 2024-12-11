@@ -33,35 +33,46 @@ class DashboardController extends Controller
     }
 
     public function index(Request $request)
-{
-    // Vérifier si l'accès est autorisé
-    if (!session('access_granted')) {
-        // Si l'accès n'est pas autorisé, rediriger vers la page de code d'accès
-        return redirect()->route('dashboard.access');
+    {
+        // Vérifier si l'accès est autorisé
+        if (!session('access_granted')) {
+            // Si l'accès n'est pas autorisé, rediriger vers la page de code d'accès
+            return redirect()->route('dashboard.access');
+        }
+
+        // Créer la requête de base
+        $query = Inscription::query();
+
+        // Trier les inscriptions en fonction des paramètres GET (tri)
+        if ($request->has('sort_by') && $request->has('direction')) {
+            $sortBy = $request->get('sort_by');
+            $direction = $request->get('direction');
+            $query->orderBy($sortBy, $direction);
+        }
+
+        // Recherche
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where('nom', 'like', "%{$search}%")
+                ->orWhere('nom_maillot', 'like', "%{$search}%")
+                ->orWhere('dossard', 'like', "%{$search}%");
+        }
+
+        // Récupérer les inscriptions depuis la base de données avec pagination
+        $inscriptions = $query->get();  // Utiliser paginate(10) pour la pagination
+
+        // Retourner la vue avec les inscriptions
+        return view('dashboard', compact('inscriptions'));
     }
 
-    // Créer la requête de base
-    $query = Inscription::query();
+    public function updatePayment(Request $request, $id)
+    {
+        $inscription = Inscription::findOrFail($id);
+        $inscription->update([
+            'paiement_maillot' => $request->input('paiement_maillot')
+        ]);
 
-    // Trier les inscriptions en fonction des paramètres GET (tri)
-    if ($request->has('sort_by') && $request->has('direction')) {
-        $sortBy = $request->get('sort_by');
-        $direction = $request->get('direction');
-        $query->orderBy($sortBy, $direction);
+        return redirect()->route('dashboard')->with('success', 'Statut de paiement mis à jour avec succès.');
     }
 
-    // Recherche
-    if ($request->has('search')) {
-        $search = $request->get('search');
-        $query->where('nom', 'like', "%{$search}%")
-              ->orWhere('nom_maillot', 'like', "%{$search}%")
-              ->orWhere('dossard', 'like', "%{$search}%");
-    }
-
-    // Récupérer les inscriptions depuis la base de données avec pagination
-    $inscriptions = $query->get();  // Utiliser paginate(10) pour la pagination
-
-    // Retourner la vue avec les inscriptions
-    return view('dashboard', compact('inscriptions'));
-}
 }
