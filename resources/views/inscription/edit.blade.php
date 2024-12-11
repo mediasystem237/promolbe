@@ -48,7 +48,7 @@
                     name="taille_maillot" 
                     class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
                 >
-                    @foreach(['S', 'M', 'L', 'XL', 'XXL'] as $size)
+                    @foreach(['S', 'M', 'L', 'XL', 'XXL''XXXL'] as $size)
                         <option value="{{ $size }}" {{ old('taille_maillot', $inscription->taille_maillot) === $size ? 'selected' : '' }}>
                             {{ $size }}
                         </option>
